@@ -1,21 +1,41 @@
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { Colors } from '../../constants/colors'
+import { SafeAreaView, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { Colors } from '../../constants/colors';
+import { useState } from 'react';
+import ImagePicker from './ImagePicker';
 
 const PlaceForm = () => {
+
+    const [enteredTitle, setEnteredTitle] = useState('');
+
+    const handleEnteredTitleChange = (enteredText) => {
+        setEnteredTitle(enteredText)
+    }
+
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.textColor}> Form ... </Text>
-        </SafeAreaView>
+        <ScrollView style={styles.container}>
+            <SafeAreaView>
+                 <Text style={styles.textColor}>Title</Text>
+                 <TextInput value={enteredTitle} onChangeText={handleEnteredTitleChange} style={styles.textInputContainer} />
+                 <ImagePicker />
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin: 20
     },
     textColor: {
+        color: Colors.primary200,
+        fontSize: 16
+    },
+    textInputContainer: {
+        marginVertical: 15,
+        borderWidth: 1,
+        borderColor: Colors.primary200,
+        padding: 10,
         color: Colors.primary200
     }
 })
