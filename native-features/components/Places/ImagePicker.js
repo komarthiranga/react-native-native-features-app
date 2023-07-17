@@ -1,8 +1,9 @@
-import { SafeAreaView, Button, Image, StyleSheet, Text } from 'react-native'
+import { SafeAreaView, Image, StyleSheet, Text } from 'react-native'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import { Alert } from 'react-native';
 import { useState } from 'react';
 import { Colors } from '../../constants/colors';
+import Button from '../UI/Button';
 const ImagePicker = () => {
     const [pickedImage, setPickedImage] = useState();
     const [cameraPermissionInformation, requestPermission] =  useCameraPermissions();
@@ -45,7 +46,7 @@ const ImagePicker = () => {
             <SafeAreaView style={styles.imagePriview}>
                 {imagePriview}
             </SafeAreaView>
-            <Button title="Take Image" onPress={takeImageHandler} />
+            <Button  onPress={takeImageHandler} icon="camera">Take Image</Button>
         </SafeAreaView>
     )
 

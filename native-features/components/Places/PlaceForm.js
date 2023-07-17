@@ -2,6 +2,7 @@ import { SafeAreaView, Text, StyleSheet, ScrollView, TextInput } from 'react-nat
 import { Colors } from '../../constants/colors';
 import { useState } from 'react';
 import ImagePicker from './ImagePicker';
+import LocationPicker from './LocationPicker';
 
 const PlaceForm = () => {
 
@@ -17,6 +18,7 @@ const PlaceForm = () => {
                  <Text style={styles.textColor}>Title</Text>
                  <TextInput value={enteredTitle} onChangeText={handleEnteredTitleChange} style={styles.textInputContainer} />
                  <ImagePicker />
+                 <LocationPicker />
             </SafeAreaView>
         </ScrollView>
     )
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         borderWidth: 1,
         borderColor: Colors.primary200,
-        padding: 10,
+        padding: 15,
         color: Colors.primary200
     }
 })
