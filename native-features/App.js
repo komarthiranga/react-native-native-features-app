@@ -7,6 +7,7 @@ import AddPlace from './screens/AddPlace';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useRef } from 'react';
 import { Colors } from './constants/colors';
+import Map from './screens/Map';
 
 export default function App() {
   const Stack = createNativeStackNavigator(); 
@@ -26,6 +27,7 @@ export default function App() {
          }}>
             <Stack.Screen name="AllPlaces" component={AllPlaces} options={{title: 'Your favorite places'}} />
             <Stack.Screen name="AddPlace" component={AddPlace} options={{title: 'Add a new Place'}} />
+            <Stack.Screen name="Map" component={Map} options={{title: 'Map'}} />
          </Stack.Navigator>
       </NavigationContainer>
     </>
