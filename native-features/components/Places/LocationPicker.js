@@ -2,14 +2,26 @@ import { SafeAreaView, StyleSheet, Alert, Image, Text } from 'react-native';
 import Button from '../UI/Button';
 import { Colors } from '../../constants/colors';
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from 'expo-location';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getMapPreview } from '../../utils/location'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 
 const LocationPicker = () => {
     const [ locationPermissionInformation, requestPermission ] = useForegroundPermissions();
     const [ pickedLocation, setPickedLocation] = useState();
     const navigation = useNavigation();
+    const route = useRoute();
+    const isFocused = useIsFocused();
+
+
+    useEffect( () => {
+        if(isFocused && route.params) {
+           setPickedLocation({
+            lat: route.params.pickedLat,
+            lng: route.params.pickedLng
+           })
+        }
+    }, [isFocused, route])
 
     const verifyPermissions = async() => {
         if(locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
