@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { useState } from 'react';
 import { Colors } from '../../constants/colors';
 import Button from '../UI/Button';
-const ImagePicker = () => {
+const ImagePicker = ({onTakeImage}) => {
     const [pickedImage, setPickedImage] = useState();
     const [cameraPermissionInformation, requestPermission] =  useCameraPermissions();
 
@@ -32,7 +32,7 @@ const ImagePicker = () => {
           quality: 0.5
        });
        setPickedImage(image.uri)
-       console.log(image);
+       onTakeImage(image.uri)
     }
 
     let imagePriview = <Text>No Image taken yet.</Text>

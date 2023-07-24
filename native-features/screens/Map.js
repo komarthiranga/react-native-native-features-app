@@ -4,13 +4,17 @@ import {  useState, useCallback } from 'react';
 import { useLayoutEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-const Map = ({navigation}) => {
-  const [ selectedLocation, setSelectedLocation ] = useState();  
+const Map = ({navigation, route}) => {
+  const initialLocation = route.params && {
+    lat: route.params.initLat,
+    lng: route.params.initLng
+  }  
+  const [ selectedLocation, setSelectedLocation ] = useState(initialLocation);
   const region = {
-    latitude: 37.78,
-    longitube: -122.43,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: initialLocation ? initialLocation.lat : 37.78,
+    longitube: initialLocation ? initialLocation.lng : -122.43,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1
   };
 
   const selectLocationHandler = (event) => {
@@ -35,10 +39,13 @@ const Map = ({navigation}) => {
   }, [navigation, selectedLocation])
 
   useLayoutEffect( () => {
+      if(initialLocation) {
+          return ;
+      }
       navigation.setOptions({
         headerRight: ({tintColor}) =>  <MaterialIcons name="add" size={24} color={tintColor} onPress={savedPickedLocationHandler} />
       })
-  }, [navigation, savedPickedLocationHandler])
+  }, [navigation, savedPickedLocationHandler, initialLocation])
 
   return <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler}>
          { selectedLocation && <Marker title="Picked Location" coordinate={{latitude: selectedLocation.lat, longitude: selectedLocation.lng}} /> }

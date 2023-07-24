@@ -1,24 +1,43 @@
 import { SafeAreaView, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { Colors } from '../../constants/colors';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ImagePicker from './ImagePicker';
 import LocationPicker from './LocationPicker';
+import SubmitButton from '../UI/SubmitButton';
+import { Place } from '../../modals/Place';
 
-const PlaceForm = () => {
+const PlaceForm = ({onAddPlace}) => {
 
     const [enteredTitle, setEnteredTitle] = useState('');
+    const [selectedImage, setSelectedImage] = useState();
+    const [pickedLocation, setPickedLocation] = useState();
+
 
     const handleEnteredTitleChange = (enteredText) => {
         setEnteredTitle(enteredText)
     }
+
+    const handleSubmitAction = () => {
+        const place = new Place(enteredTitle, selectedImage, pickedLocation);
+        onAddPlace(place);
+    }
+
+    const takeImageHandler = (imageUri) => {
+        setSelectedImage(imageUri)
+    }
+
+    const pickLocationHandler = useCallback((location) => {
+        setPickedLocation(location);
+    }, [])
 
     return (
         <ScrollView style={styles.container}>
             <SafeAreaView>
                  <Text style={styles.textColor}>Title</Text>
                  <TextInput value={enteredTitle} onChangeText={handleEnteredTitleChange} style={styles.textInputContainer} />
-                 <ImagePicker />
-                 <LocationPicker />
+                 <ImagePicker onTakeImage={takeImageHandler} />
+                 <LocationPicker onPickLocation={pickLocationHandler} />
+                 <SubmitButton onPress={handleSubmitAction}> Add Place </SubmitButton>
             </SafeAreaView>
         </ScrollView>
     )
